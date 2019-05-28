@@ -1,0 +1,254 @@
+git 命令学习
+# git管理 http://blog.jobbole.com/25775/
+# 0518
+1 gitignore规则不生效
+.gitignore只能忽略那些原来没有被track的文件，如果某些文件已经被纳入了版本管理中，则修改.gitignore是无效的
+
+解决方法就是先把本地缓存删除（改变成未track状态），然后在提交：
+git rm -r --cached
+git add
+git commit -m 'update /gitignore'
+
+2 git忽略某个指定的文件（不从版本库中删除）
+执行命令如下：
+git update-index ---assume-unchanged config.conf
+用git status查看，已经得到了想要的效果
+
+3 git取消忽略某个指定的文件
+git update-index --no-assume-unchanged config.conf
+
+4 将当前版本回退到上一个版本，命令如下：
+git reset --hard HEAD^
+
+5 回退到上两个版本
+git reset - hard HEAD^^
+
+6 回退到指定版本
+git log //显示从最近到最远的提交日志
+git reset --hard commit_id //回退到指定版本
+
+7 查看命令历史
+git reflog
+
+8 拉去暂存区文件并将其替换成工作区文件
+git checkout-- <file>
+
+9 跟踪取消，即吧文件从git中拿出来，不再进行版本跟踪，但保留工作区文件：
+git rm -- cached filename
+
+10 查看工作区和版本库里面最新版本的区别
+git diff HEAD - <fielname>
+// git diff命令比较的是工作目录中当前文件与暂存区快照之间的差异，也就是修改之后还没有暂存起来的变化内容
+
+11 将工作区的内容放入版本库的暂存区
+git add <fielname>
+
+12 将暂存区的内日用提交到当前分支
+git commit -m "git tracks changes"
+
+13 显示工作目录和暂存区的状态
+git status
+
+14 删除一个文件
+git rm <fielname>
+
+15 从远程库克隆项目
+git clone <地址>
+
+16 创建分支，然后切换到分支
+git checkout -b dev # git checkout命令加上<-b>参数表示创建并切换，相当于一下两条命令：
+# git branch dev
+# git checkout dev
+
+17 查看当前分支
+git branch # git branch会列出所有分支，当前分支前面会表一个*号
+
+18 git merge命令用于合并指定分支到当前分支
+git merge dev
+
+19 删除本地分支
+git branch -d dev
+
+20 删除远程dev分支
+git push origin :dev
+
+21 切换分支
+git checkout <name>
+
+22 查看远程库的信息
+git remote 或者 git remote -v
+
+23 推送分支，即把该分支上的所有本地提交推送到远程库。推送时，要指定本地分支，这样，git就会把该分支推送到远程库对应的远程分支上：
+git push origin master # 如果要推送到其他分支，比如dev,应改成：git push origin dev
+
+24 拉取分支
+git pull
+
+# git 常用命令详解（1）
+1 git clone https://github.com/EQ94/Git_learn.git <Project_file_name>  # 将远程url地址中的远程版本库，完全克隆岛本地的Project_file_name中
+
+2 git init he git remote:这种方式稍微复杂，当本地创建了一个工作目录，可以进入这个目录，使用“git init"命令，进行初始化；git以后就会对该目录下的文件进行版本控制，这时候，如果需要将它放在远程服务器上，可以在远程服务器上创建一个目录，病吧可访问的URL记录下来，此时，就可以利用”git remote add"命令来增加一个远程服务端，例如：
+git remote add origin <URL>
+上面的命令就会增加URL地址为<URL>，名称为origin的远程服务器，以后提交代码的时候只需要使用origin别名即可。
+
+3 远程仓库相关命令：
+检出仓库： git clone <url（project地址）>
+查看远程仓库： git remote -v
+添加远程仓库： git remote add [name] [url]
+删除远程仓库： git remote rm [name]
+修改远程仓库： git remote set-url --push [name][newURL]
+拉取远程仓库： git pull [remoteName][localBranchName]
+推送远程仓库： git push [remoteName][localBranchName]
+
+如果想把本地的某个分支test提交到远程仓库，并作为远程仓库的master分支，或者作为另一个名叫test的分支，操作如下：
+git push origin test:master  # 提交本地test分支作为远程的master分支
+git push origin test:test #提交本地test分支作为远程的test分支
+
+
+4 分支（branch）操作相关命令
+查看本地分支： git branch
+查看远程分支： git branch -v
+创建本地分支： git branch [name] # 注意新分支创建后不会自动切换为当前分支
+切换分支： git checkout [name]
+删除分支： git branch -d [name] # -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D
+合并分支： git merge [name] # 将名称为[name]的分支与当前分支合并
+
+创建远程分支（本地分支push到远程）： git push origin [name]
+删除远程分支： git push origin:heads/[name] 或 gitpush origin:[name]
+
+5 版本操作相关命令
+查看版本：git tag
+创建版本： git tag [name]
+删除版本： git tag -d [name]
+查看远程版本：git tag -r
+创建远程版本（本地版本push到远程）：git push origin [name]
+删除远程版本：git push origin:ref/tags/[name]
+合并远程仓库的tag到本地：git pull origin --tags
+上传本地tag到远程仓库： git push origin --tags
+创建带注释的tag: git tag -a [name] -m "Message(注释)"
+
+6 子模块（submodule)相关操作
+添加子模块：git submodule add [url][path] # url为子模块的地址，path为需要添加到的位置
+
+初始化子模块：git submodule init # 只在首次检出仓库时运行一次就行
+更新子模块： git submodule update # 每次更新或切换分支后都需要运行一下
+
+删除子模块：（分4步）
+1 git rm --cached [path]
+2 编辑 “.gitmodules"文件，将子模块的相关配置结点删除掉
+3 编辑 “.git/config”文件，将子模块的相关配置结点删除掉
+4 手动删除子模块残留的目录
+
+
+7 忽略一些文件、文件夹不提交
+在仓库根目录下创建名为“。gitignore"的文件，写入不需要的文件夹名或文件，每个元素占一行即可，如：
+target
+bin
+*、db
+
+###################### git 命令详解 ##########################
+现在我们有了本地和远程的版本库：
+git pull: 从其他的版本库（既可以是远程的，也可以是本地的）将代码更新到本地，例如：’git pull origin master" 就是将origin这个版本库的代码更新到本地的master主枝；
+
+git add: 是将当前更改或者新增的文件加入到git的索引中，加入到git的索引中就表示计入了版本历史中，这也是提交之前所需要执行的一步，例如："git add app/model/user.rb"就会增加app/model/user.rb文件到git的索引中
+
+git rm: 从当前的工作空间中和索引中删除文件，例如；"git rm app/model/user.rb/"
+
+git commit: 提交当前工作空间的修改内容. 例如：“git commit -m stroy #3, add user model", 提交的时候必须用-m来输入一条提交信息
+
+git push： 将本地commit的代码更新到远程版本库中，例如“git push origin",就会将本地的代码更新到名为origin的远程版本库中
+
+git log: 查看历史日志
+
+git revert: 还原一个版本的修改，必须提供一个具体的git版本号，例如：“git revert bbas......."
+
+以上命令几乎都是每个版本控制工具所公有的，一下是Git独有的一些命令：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+git的add、commit、push命令：（注意区别：工作区，暂存区，本地仓库，远程区）https://blog.csdn.net/qq_37577660/article/details/78565899
+
+最基本，最简单的代码提交流程
+1 git status 查看工作区代码相对于暂存区的差别
+2 git add . (git add <fielname>) 将当前目录下修改的所有代码（或者指定的文件）从工作区添加到暂存区
+3 git commit -m "需要添加的注释"  将缓存区内容添加到本地仓库
+4 git push origin master 将本地版本库推送到远程服务器（origin是远程主机，master表示是远程服务器上的master分支，分支名可以修改）
+
+git add:
+不加参数默认为将修改操作的文件和未跟踪新添加的文件添加到git系统的暂存区（不包括删除）
+git add -u: 其中-u表示将已跟踪文件中的修改和删除的文件添加到暂存区，不包括新增加的文件，这些被删除的文件被加入到暂存区再被提交并推送到服务器的版本库之后这个文件就会从git系统中侠士了
+git add -A: -A表示将所有的已跟踪文件的修改与删除和新增的未跟踪的文件都添加到暂存区
+
+git commit:
+git commit主要是将暂存区里的改动给提交到本地的版本库。每次使用git commit命令在本地的额版本库中生成一个40位的哈希值，这个哈希值也叫commit-id;
+
+git commit -m "message": -m参数表示可以直接输入后面的“message"，如果不加-m参数，那么是不能直接输入message的，而是会调用一个编辑器，通常会是vim，让你输入这个message
+
+git commit -am "message": -am等同于-a -m; -a参数可以将所有已跟踪文件中的执行修改或删除操作的文件都提交到本地仓库，即使他们没有经过 git add添加到git add暂存区。【新加的文件（即没有被git系统的管理的文件）是不能被提交到本地仓库的】
+
+
+git push:
+	在使用git 	commit命令将修改从暂存区提交到本地版本库后，只剩下最后一步将本地版本库中的分支推送到远程服务器上对应的分支了，
+	git push的一般形式为git push <远程主机名><本地分支名><远程分支名>，例如：git push origin master: refs/for/master, 即是本地的master分支推送到远程主机origin上的对应master分支，origin是远程主机名，第一个master是本地分支名，第二个master是远程分支名。
+	
+1 git push origin master: 远程分支名被省略，如上则表示将本地分支推送到与之存在追踪关系的远程分支，如果远程分支不存在，则会被新建
+
+2 git push origin :refs/for/master: 如果省略本地分支名，则表示删除指定的远程分支，因为这等同于推送一个空的本地分支到远程分支
+
+3 git push origin: 如果当前的分支只有一个远程分支，那么主机名都可以省略，例如git push, 可以使用git branch -r查看远程的分支名
+
+
+
+
+
+
+gerrit:
+参考1： https://www.cnblogs.com/lexuele/p/5133601.html
+gerrit不允许用户直接push到代码的废纸上，否则保存；
+正确的做法是所有提交都push到，HEAD：ref/for/分支名： 例如：git push origin HEAD:refs/for/分支名
+
+git branch -a查看分支
+git push origin HEAD:refs/for/master
+
+
+当收到审核失败之后再次提交：
+此时Code-Review为负数，需要几下Change-ld，下一步提交时会用上，需要修改代码重新提交：
+
+修改好代码后，重新提交代码：
+注意：代码审核失败后，重新提交时必须使用 “git commit --amend",否则会生成新的评审任务，无法与上一次深刻任务关联
+注意：注释可以重新写，但是其中“Change-ld”必须为上一次审核任务失败的“Change-ld”，可以在Gerrit或者上一步的邮件中查看得到。
+
+再一次push代码到Gerrit: git push origin HEAD:refs/for/master
+
+参考2： https://blog.csdn.net/maggietian77/article/details/79867557
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
