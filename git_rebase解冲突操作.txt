@@ -1,86 +1,48 @@
 git-rebase 解冲突操作：
 
-<<<<<<< HEAD
 [****@admin TEST]$ git checkout master
-=======
-[admin@searcher08-892800de searcher]$ git checkout master
->>>>>>> 6e4c946a99ba38b2c8edae72091b2cf3161e40a9
 Switched to branch 'master'
 Your branch is up-to-date with 'origin/master'.
 
 
 
 
-<<<<<<< HEAD
 [****@admin TEST]$ git fetch
-=======
-[admin@searcher08-892800de searcher]$ git fetch
->>>>>>> 6e4c946a99ba38b2c8edae72091b2cf3161e40a9
 remote: Counting objects: 3478, done
 remote: Finding sources: 100% (212/212)
 remote: Total 212 (delta 120), reused 201 (delta 120)
 Receiving objects: 100% (212/212), 71.78 KiB | 0 bytes/s, done.
 Resolving deltas: 100% (120/120), completed with 74 local objects.
-<<<<<<< HEAD
-From ssh://gerrit.***.com:443/****_search/TEST
-=======
-From ssh://gerrit.jd.com:443/jd_search/searcher
->>>>>>> 6e4c946a99ba38b2c8edae72091b2cf3161e40a9
+From ssh://****.git.com:443/my_project/TEST
    0c6b36a..e16d127  master     -> origin/master
    
    
    
-<<<<<<< HEAD
 [****@admin TEST]$ git rebase
-=======
-[admin@searcher08-892800de searcher]$ git rebase
->>>>>>> 6e4c946a99ba38b2c8edae72091b2cf3161e40a9
 First, rewinding head to replay your work on top of it...
 Fast-forwarded master to refs/remotes/origin/master.
 
 
-<<<<<<< HEAD
 [****@admin TEST]$ 
 [****@admin TEST]$ 
 [****@admin TEST]$ git checkout newmaster
 Switched to branch 'newmaster'
 
 
-
 [****@admin TEST]$ git rebase master
 First, rewinding head to replay your work on top of it...
 Applying: change relevance load
 Using index info to reconstruct a base tree...
-M	kernels/****/adapters/BUILD
-=======
-[admin@searcher08-892800de searcher]$ 
-[admin@searcher08-892800de searcher]$ 
-[admin@searcher08-892800de searcher]$ git checkout newmaster
-Switched to branch 'newmaster'
-
-[admin@searcher08-892800de searcher]$ git rebase master
-First, rewinding head to replay your work on top of it...
-Applying: change relevance load
-Using index info to reconstruct a base tree...
 M	kernels/algo/adapters/BUILD
->>>>>>> 6e4c946a99ba38b2c8edae72091b2cf3161e40a9
 M	testresource/config/kernel/chain/chain.conf
 Falling back to patching base and 3-way merge...
 Auto-merging testresource/config/kernel/chain/chain.conf
 CONFLICT (content): Merge conflict in testresource/config/kernel/chain/chain.conf
-<<<<<<< HEAD
-Auto-merging kernels/****/adapters/BUILD
-Failed to merge in the changes.
-Patch failed at 0001 change relevance load
-The copy of the patch that failed is found in:
-   /export/admin/TEST/.git/rebase-apply/patch
-=======
 Auto-merging kernels/algo/adapters/BUILD
 Failed to merge in the changes.
 Patch failed at 0001 change relevance load
 The copy of the patch that failed is found in:
-   /export/admin/searcher/.git/rebase-apply/patch
->>>>>>> 6e4c946a99ba38b2c8edae72091b2cf3161e40a9
+   /export/admin/TEST/.git/rebase-apply/patch
 
 When you have resolved this problem, run "git rebase --continue".
 If you prefer to skip this patch, run "git rebase --skip" instead.
@@ -89,19 +51,11 @@ To check out the original branch and stop rebasing, run "git rebase --abort".
 
 
 
-<<<<<<< HEAD
 [****@admin TEST]$ vim testresource/config/kernel/chain/chain.conf
 [****@admin TEST]$ git add testresource/config/kernel/chain/chain.conf
 [****@admin TEST]$ git rebase --continue
 Applying: change relevance load
 [****@admin TEST]$ git-review HEAD master
-=======
-[admin@searcher08-892800de searcher]$ vim testresource/config/kernel/chain/chain.conf
-[admin@searcher08-892800de searcher]$ git add testresource/config/kernel/chain/chain.conf
-[admin@searcher08-892800de searcher]$ git rebase --continue
-Applying: change relevance load
-[admin@searcher08-892800de searcher]$ git-review HEAD master
->>>>>>> 6e4c946a99ba38b2c8edae72091b2cf3161e40a9
 Counting objects: 30, done.
 Delta compression using up to 64 threads.
 Compressing objects: 100% (29/29), done.
@@ -111,19 +65,11 @@ remote: Resolving deltas: 100% (19/19)
 remote: Processing changes: updated: 1, refs: 1, done    
 remote: 
 remote: Updated Changes:
-<<<<<<< HEAD
-remote:   http://gerrit.****.com/76580 change relevance load
+remote:   http://****.git.com/76580 change relevance load
 remote: 
-To ssh://**********@****.com:443/*****_******/***********
+To ssh://user_name@****.git.com:443/my_project/TEST
  * [new branch]      HEAD -> refs/for/master
 [****@admin TEST]$ 
-=======
-remote:   http://gerrit.jd.com/76580 change relevance load
-remote: 
-To ssh://zhangliang201@gerrit.jd.com:443/jd_search/searcher
- * [new branch]      HEAD -> refs/for/master
-[admin@searcher08-892800de searcher]$ 
->>>>>>> 6e4c946a99ba38b2c8edae72091b2cf3161e40a9
 
 
 
