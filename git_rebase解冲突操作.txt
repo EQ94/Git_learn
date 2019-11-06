@@ -1,0 +1,77 @@
+git-rebase 解冲突操作：
+
+[****@admin TEST]$ git checkout master
+Switched to branch 'master'
+Your branch is up-to-date with 'origin/master'.
+
+
+
+
+[****@admin TEST]$ git fetch
+remote: Counting objects: 3478, done
+remote: Finding sources: 100% (212/212)
+remote: Total 212 (delta 120), reused 201 (delta 120)
+Receiving objects: 100% (212/212), 71.78 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (120/120), completed with 74 local objects.
+From ssh://gerrit.***.com:443/****_search/TEST
+   0c6b36a..e16d127  master     -> origin/master
+   
+   
+   
+[****@admin TEST]$ git rebase
+First, rewinding head to replay your work on top of it...
+Fast-forwarded master to refs/remotes/origin/master.
+
+
+[****@admin TEST]$ 
+[****@admin TEST]$ 
+[****@admin TEST]$ git checkout newmaster
+Switched to branch 'newmaster'
+
+
+
+[****@admin TEST]$ git rebase master
+First, rewinding head to replay your work on top of it...
+Applying: change relevance load
+Using index info to reconstruct a base tree...
+M	kernels/****/adapters/BUILD
+M	testresource/config/kernel/chain/chain.conf
+Falling back to patching base and 3-way merge...
+Auto-merging testresource/config/kernel/chain/chain.conf
+CONFLICT (content): Merge conflict in testresource/config/kernel/chain/chain.conf
+Auto-merging kernels/****/adapters/BUILD
+Failed to merge in the changes.
+Patch failed at 0001 change relevance load
+The copy of the patch that failed is found in:
+   /export/admin/TEST/.git/rebase-apply/patch
+
+When you have resolved this problem, run "git rebase --continue".
+If you prefer to skip this patch, run "git rebase --skip" instead.
+To check out the original branch and stop rebasing, run "git rebase --abort".
+
+
+
+
+[****@admin TEST]$ vim testresource/config/kernel/chain/chain.conf
+[****@admin TEST]$ git add testresource/config/kernel/chain/chain.conf
+[****@admin TEST]$ git rebase --continue
+Applying: change relevance load
+[****@admin TEST]$ git-review HEAD master
+Counting objects: 30, done.
+Delta compression using up to 64 threads.
+Compressing objects: 100% (29/29), done.
+Writing objects: 100% (30/30), 16.81 KiB | 0 bytes/s, done.
+Total 30 (delta 19), reused 0 (delta 0)
+remote: Resolving deltas: 100% (19/19)
+remote: Processing changes: updated: 1, refs: 1, done    
+remote: 
+remote: Updated Changes:
+remote:   http://gerrit.****.com/76580 change relevance load
+remote: 
+To ssh://**********@****.com:443/*****_******/***********
+ * [new branch]      HEAD -> refs/for/master
+[****@admin TEST]$ 
+
+
+
+

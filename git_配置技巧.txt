@@ -1,0 +1,22 @@
+
+vim修改 bash_profile文件：
+vim ~/.bash_profile 
+添加如下内容：
+function git-branch-name {
+git symbolic-ref --short -q HEAD 2>/dev/null
+}
+function git-branch-prompt {
+  local branch=`git-branch-name`
+  if [ $branch ]; then printf " [%s]" $branch; fi
+}
+PS1="\u@\h \[\033[0;36m\]\W\[\033[0m\]\[\033[0;32m\]\$(git-branch-prompt)\[\033[0m\] \$ "
+
+
+function git-branch-name {
+git symbolic-ref --short -q HEAD 2>/dev/null
+}
+function git-branch-prompt {
+  local branch=`git-branch-name`
+  if [ $branch ]; then printf " [%s]" $branch; fi
+}
+PS1="\u@\h \[\033[0;36m\]\W\[\033[0m\]\[\033[0;32m\]\$(git-branch-prompt)\[\033[0m\] \$ "
